@@ -1,6 +1,7 @@
 package cn.willow.demo.controller;
 
 import cn.willow.demo.framework.Cgi;
+import cn.willow.demo.framework.SysConfig;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ import java.util.Properties;
 @RestController
 @RequestMapping("/")
 public class ConfigurationController {
-    private static final String PREFIX = "/var/www/cc";
+    private static final String PREFIX = SysConfig.DEV ? "/Users" : "/var/www/cc";
 
     @RequestMapping("/jdbc")
     public String getPropertiesByProject(Cgi cgi) throws IOException {
