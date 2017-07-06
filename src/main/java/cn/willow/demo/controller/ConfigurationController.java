@@ -18,6 +18,11 @@ import java.util.Properties;
 public class ConfigurationController {
     private static final String PREFIX = SysConfig.DEV ? "/Users" : "/var/www/cc";
 
+    @RequestMapping("/health")
+    public String health(Cgi cgi){
+        return "ok";
+    }
+
     @RequestMapping("/jdbc")
     public String getPropertiesByProject(Cgi cgi) throws IOException {
         String project = cgi.getString("project", "");
