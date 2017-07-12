@@ -19,11 +19,11 @@ public class ConfigurationController {
     private static final String PREFIX = SysConfig.DEV ? "/Users" : "/var/www/cc";
 
     @RequestMapping("/health")
-    public String health(Cgi cgi){
+    public String health(Cgi cgi) {
         return "ok";
     }
 
-    @RequestMapping("/jdbc")
+    @RequestMapping("/properties")
     public String getPropertiesByProject(Cgi cgi) throws IOException {
         String project = cgi.getString("project", "");
         String cipher = cgi.getString("cipher", "");
@@ -37,16 +37,16 @@ public class ConfigurationController {
         if (cipher.isEmpty() || savedCipher.isEmpty() || !cipher.equals(savedCipher)) {
             return "authentication is failed";
         }
-        String jdbc_url = properties.getProperty("jdbc_url");
-        String jdbc_user = properties.getProperty("jdbc_user");
-        String jdbc_password = properties.getProperty("jdbc_password");
+        if (properties.isEmpty()) {
+            return "properties is empty";
+        }
         JSONObject propertiesJson = new JSONObject();
-        propertiesJson.put("jdbc_url", jdbc_url);
-        propertiesJson.put("jdbc_user", jdbc_user);
-        propertiesJson.put("jdbc_password", jdbc_password);
+        for (String key : properties.stringPropertyNames()) {
+            String value = properties.getProperty(key);
+            propertiesJson.put(key, value);
+        }
         System.out.println(propertiesJson.toString());
         inputStream.close();
-
         return propertiesJson.toString();
     }
 }
