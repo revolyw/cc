@@ -16,7 +16,7 @@ import java.util.Properties;
 @RestController
 @RequestMapping("/")
 public class ConfigurationController {
-    private static final String PREFIX = SysConfig.DEV ? "/Users" : "/var/www/cc";
+    private static final String PREFIX = "/var/www/cc";
 
     @RequestMapping("/health")
     public String health(Cgi cgi) {
